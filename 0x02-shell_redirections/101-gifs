@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type f -name ".*.gif" | cut -d "." -f 1 | sort -f | COLLATE=C sort 
+find . -type f -name '*.gif' -exec bash -c 'for file; do echo "${file##*/}.gif" ;done'bash {} + | COLLATE=C sort -f 
