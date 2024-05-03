@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Bash script that stops 7-highlander process You cannot use kill or killall
+process="7-highlander"
+pkill -f $process
