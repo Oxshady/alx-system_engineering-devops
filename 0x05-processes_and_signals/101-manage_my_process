@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# manages manage_my_process
+cmd_arg=$1
+if [[ $cmd_arg == "start" ]]
+then
+	./manage_my_process &
+	echo $! > /var/run/my_process.pid
+	echo "manage_my_process started"
+elif [[ $cmd_arg == "stop" ]]
+then
+	pkill -SIGTERM "manage_my_process"
+	rm /var/run/my_process.pid
+	echo "manage_my_process stopped"
+elif [[ $cmd_arg == "restart" ]]
+then
+	pkill -SIGTERM "manage_my_process"
+	rm /var/run/my_process.pid
+	./manage_my_process &
+	echo $! > /var/run/my_process.pid
+	echo "manage_my_process restarted"
+else
+	echo "Usage: manage_my_process {start|stop|restart}"
+fi
