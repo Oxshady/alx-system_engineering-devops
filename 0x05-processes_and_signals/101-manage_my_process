@@ -8,12 +8,14 @@ then
 	echo "manage_my_process started"
 elif [[ $cmd_arg == "stop" ]]
 then
-	pkill -SIGTERM "manage_my_process"
+    pid=$(</var/run/my_process.pid)
+	kill -SIGTERM "$pid"
 	rm /var/run/my_process.pid
 	echo "manage_my_process stopped"
 elif [[ $cmd_arg == "restart" ]]
 then
-	pkill -SIGTERM "manage_my_process"
+    pid=$(</var/run/my_process.pid)
+	kill -SIGTERM "$pid"
 	rm /var/run/my_process.pid
 	./manage_my_process &
 	echo $! > /var/run/my_process.pid
