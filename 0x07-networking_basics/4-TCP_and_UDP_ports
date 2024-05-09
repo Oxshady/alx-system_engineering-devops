@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+#let's show listening port and it's service PID
 netstat -lp
