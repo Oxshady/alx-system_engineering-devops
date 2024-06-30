@@ -15,7 +15,7 @@ file_line {'ssh_key':
 file_line {'ssh_pass':
   path               => '/etc/ssh/ssh_config',
   line               => '    PasswordAuthentication no',
-  match              => '^[#]+[\s]*(?i)PasswordAuthentication[\s]+(yes|no)$',
+  match              => '^[#]+[\s]*(?i)PasswordAuthentication[\s]+no$',
   replace            => true,
   append_on_no_match => true
 }
