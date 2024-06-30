@@ -1,0 +1,7 @@
+# configure ssh
+# setting authentication public key path and disable pass authentication
+Host 54.236.233.67
+	User ubuntu
+	PasswordAuthentication no
+	IdentityFile ~/.ssh/school
+	IdentitiesOnly yes
