@@ -2,35 +2,21 @@
 # disable password authentication
 # use school priv
 include stdlib
-service { 'sshd':
-  ensure     => running,
-  enable     => true,
-  hasrestart => true,
-  hasstatus  => true,
-  provider   => 'systemd'
-}
 
 file_line {'ssh_key':
-    ensure  => 'present',
-    line    => '    IdentityFile ~/.ssh/school',
-    path    => '/etc/ssh/sshd_config',
-    match   => "^#*\s*IdentityFile\s+~/.ssh/id_rsa$"
-    replace => true,
-    notify  => Exec['sshd_restart'],
+    line               => '    IdentityFile ~/.ssh/school',
+    path               => '/etc/ssh/sshd_config',
+    match              => "^[#]*[\s]*IdentityFile[\s]+~/.ssh/id_rsa$"
+    append_on_no_match => true
+    replace            => true,
 }
 
 
 file_line {'ssh_pass':
-    ensure  => 'present',
-    line    => '    PasswordAuthentication no',
-    path    => '/etc/ssh/sshd_config',
-    match   => "^#*\s*PasswordAuthentication\s+yes$"
-    replace => true,
-    notify  => Exec['sshd_restart'],
+    line               => '    PasswordAuthentication no',
+    path               => '/etc/ssh/sshd_config',
+    match              => "^#*\s*PasswordAuthentication\s+yes$"
+    append_on_no_match => true
+    replace            => true,
 }
 
-exec { 'sshd_restart':
-  path        => '/usr/bin:/bin',
-  command     => '/bin/systemctl restart sshd',
-  refreshonly => true
-}
