@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# okey lwt's install nginx and configure it
+sudo apt update
+sudo apt -y install nginx
+sudo ufw allow "Nginx HTTP"
+sudo service nginx start
+sudo chmod -R 775 /var/www/html
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/error.html > /dev/null
+sudo sed -i '/root \/var\/www\/html/a \\trewrite ^/redirect_me https://www.youtube.com/ permanent;' /etc/nginx/sites-available/default
+sudo sed -i '/root \/var\/www\/html/a \\terror_page 404 \/error.html' /etc/nginx/sites-available/default
+sudo nginx -s reload
