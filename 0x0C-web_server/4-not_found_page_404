@@ -6,8 +6,8 @@ sudo ufw allow "Nginx HTTP"
 sudo service nginx start
 sudo chmod -R 775 /var/www/html
 echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
-touch /var/www/html/error.html
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/error.html > /dev/null
+sudo touch /var/www/html/error.html
+sudo echo "Ceci n'est pas une page" | sudo tee /var/www/html/error.html > /dev/null
 sudo sed -i '/listen 80 default_server/a \\trewrite ^/redirect_me https://www.youtube.com/ permanent;' /etc/nginx/sites-available/default
 sudo sed -i '/listen 80 default_server/a \\terror_page 404 \/error.html' /etc/nginx/sites-available/default
 sudo nginx -s reload
