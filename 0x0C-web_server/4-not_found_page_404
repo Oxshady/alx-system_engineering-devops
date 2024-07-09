@@ -7,6 +7,6 @@ sudo chmod -R 755 /var/www
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 sudo sed -i '/\/var\/www\/html/a\        rewrite ^/redirect_me https://www.youtube.com/ permanent;' /etc/nginx/sites-available/default
-echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+echo "Ceci n'est pas une page" >> /var/www/html/error.html
 sudo sed -i "/\/var\/www\/html/a\        error_page 404 /error.html;" default
 sudo nginx -s reload
