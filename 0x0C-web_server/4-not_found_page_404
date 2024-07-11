@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-# okey lwt's install nginx and configure it
-sudo service nginx start
+# Update package list and install Nginx
+sudo apt update
+sudo apt install -y nginx
+sudo systemctl start nginx
 sudo ufw allow 'Nginx HTTP'
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
-echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
-sudo sed -i '/\/var\/www\/html/a\        rewrite ^/redirect_me https://www.youtube.com/ permanent;' /etc/nginx/sites-available/default
-echo "Ceci n'est pas une page" >> /var/www/html/error.html
-sudo sed -i "/\/var\/www\/html/a\        error_page 404 /error.html;" default
-sudo nginx -s reload
+sudo cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+echo -e "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+sudo sed -i '/server {/a \    location /redirect_me {\n        return 301 https://www.youtube.com;\n    }' /etc/nginx/sites-available/default
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/error.html
+sudo sed -i '/server {/a \    error_page 404 /error.html;' /etc/nginx/sites-available/default
+sudo nginx -t
+sudo systemctl reload nginx
