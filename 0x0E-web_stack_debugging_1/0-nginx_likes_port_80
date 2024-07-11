@@ -2,4 +2,4 @@
 # Nginx must be running, and listening on port 80 of all the server’s active IPv4 IPs
 sudo apt install -y nginx
 sudo sed -i "/server {/a\        listen 80;" /etc/nginx/sites-available/default
-sudo nginx -s relaod
+sudo nginx -s reload
