@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# configure the nginx to run under priv of nginx user
+sudo adduser nginx
+sudo chown -R nginx:nginx /var/log/nginx
+sudo chown -R nginx:nginx /var/lib/nginx
+sudo sed -i "/user/c\user nginx;" nginx.conf
+nginx -s reload
