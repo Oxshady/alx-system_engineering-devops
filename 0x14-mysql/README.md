@@ -1,0 +1,1 @@
+# configuring mysql server on my server
