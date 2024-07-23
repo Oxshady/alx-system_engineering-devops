@@ -2,6 +2,8 @@
 # configure the nginx to run under priv of nginx user
 sudo adduser nginx
 sudo chown -R nginx:nginx /var/log/nginx
+sudo chown -R nginx:nginx /var/www/html
 sudo chown -R nginx:nginx /var/lib/nginx
 sudo sed -i "/user/c\user nginx;" /etc/nginx/nginx.conf
+sudo sed -i "/http {/a\\\tserver {\\n\\t\\tlisten 8080 default_server;\\n\\t\\tlisten [::]:8080 default_server;\\n\\t\\t}" /etc/nginx/nginx.conf
 sudo systemctl reload nginx
