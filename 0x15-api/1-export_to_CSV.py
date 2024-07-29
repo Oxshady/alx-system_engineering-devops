@@ -3,17 +3,17 @@
 returns information about his/her TODO list progress."""
 import requests
 from sys import argv
-id = argv[1]
+
 url = "https://jsonplaceholder.typicode.com/todos/"
 todo = requests.get(url=url).json()
-user = requests.get(url=f"https://jsonplaceholder.typicode.com/users/{id}")
+user = requests.get(url=f"https://jsonplaceholder.typicode.com/users/{argv[1]}")
 user = user.json().get('username')
 data = []
 for toodo in todo:
-    if str(toodo.get("userId")) == id:
-        data.append((toodo.get("completed"), toodo.get("title")))
+    if str(toodo.get("userId")) == argv[1]:
+        data.append((toodo.get("completed"),toodo.get("title")))
 
 for comp, title in data:
-    with open(f"{id}.csv", 'a') as csvf:
-        data = f'"{id}","{user}","{comp}","{title}"\n'
+    with open(f"{argv[1]}.csv",'a') as csvf:
+        data = f'"{argv[1]}","{user}","{comp}","{title}"\n'
         csvf.write(data)
