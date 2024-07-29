@@ -32,7 +32,8 @@ for todo in todolist:
         pass
 if __name__ == "__main__":
     i = 0
-    for completed, title in titles:
-        print(f'"{argv[1]}","{username}","{completed}","{title}"')
-        i += 1
-        # print(f'"{argv[1]}",""')
+    data = ""
+    with open(f"{argv[1]}.csv", "a") as csvf:
+        for completed, title in titles:
+            data = f'"{argv[1]}","{username}","{completed}","{title}"\n'
+            csvf.write(data)
