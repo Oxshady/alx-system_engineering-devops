@@ -11,6 +11,8 @@ getname = 0
 username = ""
 url = "https://jsonplaceholder.typicode.com/todos/"
 res = requests.get(url=url)
+if res.status_code != 200:
+    exit()
 todolist = res.json()
 url = url.replace("todos/", "users/")
 for todo in todolist:
@@ -21,6 +23,8 @@ for todo in todolist:
                 getname = 1
                 url += f"{argv[1]}"
                 res = requests.get(url=url)
+                if res.status_code != 200:
+                    continue
                 res = res.json()
                 username = res.get("name")
             if todo.get("completed") is True:
