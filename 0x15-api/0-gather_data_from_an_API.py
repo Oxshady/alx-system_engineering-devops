@@ -16,14 +16,14 @@ url = url.replace("todos/", "users/")
 for todo in todolist:
     try:
         if todo.get("userId") == int(argv[1]):
-            tasks +=1
+            tasks += 1
             if getname == 0:
                 getname = 1
                 url += f"{argv[1]}"
                 res = requests.get(url=url)
                 res = res.json()
                 username = res.get("name")
-            if todo.get("completed") == True:
+            if todo.get("completed") is True:
                 comp += 1
                 titles.append(todo.get("title"))
     except Exception:
