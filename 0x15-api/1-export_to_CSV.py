@@ -1,39 +1,19 @@
 #!/usr/bin/python3
-""" as i did in 0-gather_Data_from_an_API module
-but extend Python script to export data in the CSV format."""
+""" script that, using this REST API, for a given employee ID,
+returns information about his/her TODO list progress."""
 import requests
 from sys import argv
 
-tasks = 0
-titles = []
-getname = 0
-username = ""
 url = "https://jsonplaceholder.typicode.com/todos/"
-res = requests.get(url=url)
-if res.status_code != 200:
-    exit()
-todolist = res.json()
-url = url.replace("todos/", "users/")
-for todo in todolist:
-    try:
-        if todo.get("userId") == int(argv[1]):
-            tasks += 1
-            if getname == 0:
-                getname = 1
-                url += f"{argv[1]}"
-                res = requests.get(url=url)
-                if res.status_code != 200:
-                    continue
-                res = res.json()
-                username = res.get("name")
-            if todo.get("completed") is True:
-                titles.append((True, todo.get("title")))
-    except Exception:
-        pass
-if __name__ == "__main__":
-    i = 0
-    data = ""
-    with open(f"{argv[1]}.csv", "a") as csvf:
-        for completed, title in titles:
-            data = f'"{argv[1]}","{username}","{completed}","{title}"\n'
-            csvf.write(data)
+todo = requests.get(url=url).json()
+user = requests.get(url=f"https://jsonplaceholder.typicode.com/users/{argv[1]}")
+user = user.json().get('username')
+data = []
+for toodo in todo:
+    if str(toodo.get("userId")) == argv[1]:
+        data.append((toodo.get("completed"),toodo.get("title")))
+
+for comp, title in data:
+    with open(f"{argv[1]}.csv",'a') as csvf:
+        data = f'"{argv[1]}","{user}","{comp}","{title}"\n'
+        csvf.write(data)
