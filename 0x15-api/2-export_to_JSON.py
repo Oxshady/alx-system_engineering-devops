@@ -15,10 +15,11 @@ if __name__ == "__main__":
     datalist = []
     for toodo in todo:
         if str(toodo.get("userId")) == id:
+            # print(toodo)
             data["task"] = toodo.get("title")
             data["completed"] = toodo.get("completed")
             data["username"] = user
-            datalist.append(data)
+            datalist.append(dict(data))
     final = {f"{id}": datalist}
-    with open(f"{id}.json", 'a') as jsonf:
+    with open(f"{id}.json", 'w') as jsonf:
         json.dump(final, jsonf)
