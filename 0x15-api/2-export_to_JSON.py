@@ -15,7 +15,6 @@ if __name__ == "__main__":
     datalist = []
     for toodo in todo:
         if str(toodo.get("userId")) == id:
-            # print(toodo)
             data["task"] = toodo.get("title")
             data["completed"] = toodo.get("completed")
             data["username"] = user
