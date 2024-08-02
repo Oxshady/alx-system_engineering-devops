@@ -6,15 +6,13 @@ sudo chown -R "$USER":"$USER" /etc/haproxy/
 sudo chmod -R 755 /etc/haproxy
 echo "frontend myproxy
 	bind *:80
-	timeout client 30s
 	mode http
 	default_backend myservers
 backend myservers
-	server 465043-web-01 52.201.152.150:80
-	server 465043-web-02 18.209.152.20:80
-	timeout connect 10s
-	timeout server 100s
+	balance roundrobin
 	mode http
+	server 465043-web-01 52.201.152.150:80 check
+	server 465043-web-02 18.209.152.20:80 check
 " >> /etc/haproxy/haproxy.cfg
 sudo systemctl restart haproxy
 sudo systemctl enable haproxy
