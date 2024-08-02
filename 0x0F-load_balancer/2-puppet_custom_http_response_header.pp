@@ -14,12 +14,12 @@ file {'/var/www/html/index.html':
 }
 
 exec {'redirect_me':
-	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://th3-gr00t.tk/ permanent;" /etc/nginx/sites-available/default',
 	provider => 'shell'
 }
 
-exec {'custom_header':
-	command => 'sed -i "26i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default"'
+exec {'HTTP header':
+	command => 'sed -i "25i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
 	provider => 'shell'
 }
 
