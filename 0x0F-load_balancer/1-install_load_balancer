@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 sudo apt update -y -qq
 sudo apt install haproxy -y -qq
-sudo chown -R $USER:$USER /etc/haproxy/
+sudo chown -R "$USER":"$USER" /etc/haproxy/
 sudo chmod -R 755 /etc/haproxy
 echo "frontend myproxy
 	bind *:80
