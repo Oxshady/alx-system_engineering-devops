@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # configure HAproxy load balancer
+
 sudo apt update -y -qq
 sudo apt install haproxy -y -qq
 sudo chown -R "$USER":"$USER" /etc/haproxy/
