@@ -13,7 +13,7 @@ backend myservers
 	mode http
 	server 465043-web-01 52.201.152.150:80 check
 	server 465043-web-02 18.209.152.20:80 check
-ENABLED=1
 " >> /etc/haproxy/haproxy.cfg
+echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
 sudo systemctl restart haproxy
 sudo systemctl enable haproxy
