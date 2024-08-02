@@ -1,0 +1,1 @@
+# establish new web server as a backup for my first web server and establish a load balancer to balance the traffic across the servers
