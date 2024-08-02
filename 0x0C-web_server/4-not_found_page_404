@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # okey lwt's install nginx and configure it
-sudo apt-get update -y -qq && \
-	sudo apt-get install nginx -y
+sudo apt-get update -y -qq
+sudo apt-get install nginx -y
 sudo service nginx start
 sudo ufw allow 'Nginx HTTP'
 sudo chown -R "$USER":"$USER" /var/www/html
