@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 """recursion ^_^ """
 import requests
+
+
 def recurse(subreddit, hot_list=[], after=None):
     """titles of hot posts"""
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {"User-Agent": "python-requests/2.32.3"}
     if after:
-        res = requests.get(url=url, headers=headers, params={"after":after})
+        res = requests.get(url=url, headers=headers, params={"after": after})
     else:
         res = requests.get(url=url, headers=headers)
     if res.status_code == 200:
