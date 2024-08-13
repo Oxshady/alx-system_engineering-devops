@@ -1,6 +1,5 @@
-#!/usr/bin/python3
-"""count --> wordlist
-recursively query the api
+"""
+recursively query api
 """
 import requests
 import re
@@ -8,7 +7,7 @@ import re
 
 def count_words(subreddit, word_list, after=None, word_count=None):
     """
-    recursively query the api
+    recursively query api
     """
     if word_count is None:
         word_count = {word.lower(): 0 for word in word_list}
@@ -17,7 +16,12 @@ def count_words(subreddit, word_list, after=None, word_count=None):
     params = {'limit': 100}
     if after:
         params['after'] = after
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(
+        url,
+        headers=headers,
+        params=params,
+        allow_redirects=False
+        )
     if response.status_code != 200:
         return
     data = response.json()
@@ -27,10 +31,8 @@ def count_words(subreddit, word_list, after=None, word_count=None):
     for article in articles:
         title = article['data']['title'].lower()
         for word in word_count:
-            word_pattern = re.compile(
-                r'\b{}\b'.format(
-                    re.escape(word)), re.IGNORECASE
-                )
+            word_pattern = re.compile(r'\b{}\b'.format(
+                re.escape(word)), re.IGNORECASE)
             word_count[word] += len(word_pattern.findall(title))
     after = data['data'].get('after')
     if after:
