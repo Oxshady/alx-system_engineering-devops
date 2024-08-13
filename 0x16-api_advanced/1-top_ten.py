@@ -10,10 +10,11 @@ def top_ten(subreddit):
     headers = {"User-Agent": "python-requests/2.32.3"}
     params = {"limit": 10}
     res = requests.get(url=url, headers=headers, params=params)
-    try:
-        data = res.json()['data']['children']
-    except KeyError:
-        print("None")
-        return
-    for obj in data:
-        print(obj.get('data').get('title'))
+    if res.status_code == 200:
+        try:
+            data = res.json()['data']['children']
+        except KeyError:
+            print("None")
+            return
+        for obj in data:
+            print(obj.get('data').get('title'))
