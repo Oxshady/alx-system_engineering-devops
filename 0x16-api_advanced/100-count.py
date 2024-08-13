@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""count --> wordlist"""
+"""count --> wordlist
+recursively query the api
+"""
 import requests
 import re
 
