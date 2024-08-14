@@ -2,8 +2,8 @@
 """
 recursively query api
 """
-import requests
 import re
+import requests
 
 
 def count_words(subreddit, word_list, after=None, word_count=None):
