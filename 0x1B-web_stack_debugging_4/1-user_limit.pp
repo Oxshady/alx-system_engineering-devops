@@ -1,19 +1,15 @@
 # new admin
 
-$u = 'holberton'
-$f = '/etc/security/limits.conf'
+$file_path = '/etc/default/nginx'
+$line = 'ULIMIT="-n 4096"'
 
-exec { 'Increase soft number of files limit':
+exec { 'modify':
         provider => 'shell',
-        command  => "sed -i 's/^${u} soft nofile.*\$/${u} soft nofile 4096/' ${f}",
+        command  => "sed -i 's/^ULIMIT=.*/${line}/' ${file_path}",
+        unless   => "grep -q '^${line}\$' ${file_path}",
 }
 
-exec { 'Increase hard number of files limit':
+exec { 'restart':
         provider => 'shell',
-        command  => "sed -i 's/^${u} hard nofile.*\$/${u} hard nofile 4096/' ${f}",
-}
-
-exec { 'reload limits':
-        provider => 'shell',
-        command  => 'sudo sysctl -p',
+        command  => 'sudo service nginx restart',
 }
