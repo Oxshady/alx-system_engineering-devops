@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+#parsing the dig output
+
+get_dns_info() {
+    local subdomain=$1
+    local domain=$2
+    dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | awk -v subdomain="$subdomain" '
+    /IN/ {
+        record_type = $4
+        destination = $5
+        print "The subdomain " subdomain " is a " record_type " record and points to " destination
+    }'
+}
+
+# Main script logic
+domain=$2
+subdomain=$1
+
+if [ -z "$domain" ]; then
+    echo "Domain is required."
+    exit 1
+fi
+
+get_dns_info "$subdomain" "$domain"
+
+~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                
