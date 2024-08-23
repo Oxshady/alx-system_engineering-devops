@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
-#parsing the dig output
+#parsing dig output
 
 get_dns_info() {
     local subdomain=$1
     local domain=$2
-    dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | awk -v subdomain="$subdomain" '
+    local conc
+
+    if [ -z "$subdomain" ]; then
+        conc="$domain"
+        subdomain="$domain"
+    else
+        conc="$subdomain.$domain"
+    fi
+
+    dig "$conc" | grep -A1 'ANSWER SECTION:' | awk -v subdomain="$subdomain" '
     /IN/ {
         record_type = $4
         destination = $5
@@ -12,15 +21,16 @@ get_dns_info() {
     }'
 }
 
-# Main script logic
-domain=$2
-subdomain=$1
+domain=$1
+subdomain=$2
 
-if [ -z "$domain" ]; then
-    echo "Domain is required."
-    exit 1
+
+if [ -z "$subdomain" ]; then
+    get_dns_info "" "$domain"
+    default_subdomains=("www" "lb-01" "web-01" "web-02")
+    for sub in "${default_subdomains[@]}"; do
+        get_dns_info "$sub" "$domain"
+    done
+else
+    get_dns_info "$subdomain" "$domain"
 fi
-
-get_dns_info "$subdomain" "$domain"
-
-~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                                                                                      ~                
