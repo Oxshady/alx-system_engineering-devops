@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 #parsing the dig output
 
 get_dns_info() {
