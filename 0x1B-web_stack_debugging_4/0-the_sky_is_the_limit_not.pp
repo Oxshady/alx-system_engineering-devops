@@ -1,14 +1,5 @@
-# solving request limit issue
-
-$pt = 'ULIMIT="-n 4096"'
-
-exec { 'nginx-limit-req':
-        provider => 'shell',
-        command  => "sed -i 's/^ULIMIT=.*/${pt}/ /etc/default/nginx'",
-        unless   => "grep -q '^${pt}\$ /etc/default/nginx'",
-}
-
-exec { 'reload':
-        provider => 'shell',
-        command  => 'sudo service nginx restart',
+# fix nginx
+exec { 'fix ulimit':
+    provider => 'shell',
+    command  => 'sed -i s/15/5000/ /etc/default/nginx; service nginx restart',
 }
